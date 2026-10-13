@@ -16,7 +16,7 @@ If reusing an existing repository, replace its old project files; uploading new 
 - Responsive Spanish/English menu, logos, photos, search, categories, combinations, bottled drinks, add-ons and persistent cart.
 - Demo checkout, receipts, status updates and the restaurant dashboard at `/admin`.
 - **Orders, settings and sample email signups stay in that browser on that device.** They are not sent to a kitchen, shared with another device, or backed up on a server. Clearing browser storage removes them. A copied demo order link works only on that same browser/device.
-- The opening form explicitly identifies itself as a demo until shared storage is configured. Use fictional customer details.
+- Opening signups need shared storage configured to reach the restaurant. Without it, they remain in browser storage.
 - No actual payments, dispatch, delivery or outgoing emails are activated.
 
 ## Optional: shared kitchen dashboard and persistent storage
