@@ -1,0 +1,5 @@
+import {createHmac,createHash,timingSafeEqual} from 'node:crypto';
+export const hash=(v:string)=>createHash('sha256').update(v).digest('hex');
+export const equal=(a:string,b:string)=>timingSafeEqual(Buffer.from(hash(a)),Buffer.from(hash(b)));
+export function createToken(secret:string,password:string,now=Date.now()){const value=Buffer.from(JSON.stringify({exp:now+8*60*60*1000,role:'admin',passwordVersion:hash(password)})).toString('base64url');return value+'.'+createHmac('sha256',secret).update(value).digest('base64url');}
+export function verifyToken(token:string,secret:string,password:string,now=Date.now()){try{if(secret.length<32||password.length<16)return false;const [value,signature,...rest]=token.split('.');if(rest.length||!signature||!equal(signature,createHmac('sha256',secret).update(value).digest('base64url')))return false;const d=JSON.parse(Buffer.from(value,'base64url').toString());return d.role==='admin'&&Number.isFinite(d.exp)&&d.exp>now&&d.exp<=now+8*60*60*1000&&equal(d.passwordVersion,hash(password));}catch{return false;}}
